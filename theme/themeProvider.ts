@@ -5,6 +5,13 @@ interface ColorPallete {
   dark: string;
 }
 
+//App Theme Text
+interface Text {
+  fontSize: number;
+  fontWeight: ("normal" | "bold" | "bolder") | number;
+  fontHeight: number;
+}
+
 //App Theme
 interface AppTheme {
   pallete: {
@@ -35,6 +42,33 @@ interface AppTheme {
       success: string;
       warn: string;
       info: string;
+    };
+  };
+  typography: {
+    fontFamily: string;
+    headings: {
+      h1: Text;
+      h2: Text;
+      h3: Text;
+      h4: Text;
+      h5: Text;
+      h6: Text;
+    };
+    text: {
+      bodyLg: Text;
+      bodyMd: Text;
+      bodySm: Text;
+      bodySmAlt: Text;
+      label: Text;
+      Hint: Text;
+    };
+    interaction: {
+      linkMd: Text;
+      linkSm: Text;
+      strikethroughMd: Text;
+      strikethroughSm: Text;
+      pillMd: Text;
+      pillSm: Text;
     };
   };
 }
@@ -101,6 +135,105 @@ const themeProvider: AppTheme = {
       success: "#53FA96",
       warn: "#FFD84D",
       info: "#864DFF",
+    },
+  },
+  typography: {
+    fontFamily: "Arial",
+    headings: {
+      h1: {
+        fontSize: 40,
+        fontHeight: 40,
+        fontWeight: "bold",
+      },
+      h2: {
+        fontSize: 32,
+        fontHeight: 36,
+        fontWeight: "bold",
+      },
+      h3: {
+        fontSize: 28,
+        fontHeight: 32,
+        fontWeight: "bold",
+      },
+      h4: {
+        fontSize: 20,
+        fontHeight: 24,
+        fontWeight: "bold",
+      },
+      h5: {
+        fontSize: 16,
+        fontHeight: 24,
+        fontWeight: "bold",
+      },
+      h6: {
+        fontSize: 12,
+        fontHeight: 12,
+        fontWeight: "bold",
+      },
+    },
+    text: {
+      bodyLg: {
+        fontSize: 20,
+        fontHeight: 24,
+        fontWeight: "normal",
+      },
+      bodyMd: {
+        fontSize: 16,
+        fontHeight: 20,
+        fontWeight: "normal",
+      },
+      bodySm: {
+        fontSize: 12,
+        fontHeight: 16,
+        fontWeight: "normal",
+      },
+      bodySmAlt: {
+        fontSize: 12,
+        fontHeight: 16,
+        fontWeight: "bold",
+      },
+      label: {
+        fontSize: 12,
+        fontHeight: 12,
+        fontWeight: "normal",
+      },
+      Hint: {
+        fontSize: 10,
+        fontHeight: 16,
+        fontWeight: "normal",
+      },
+    },
+    interaction: {
+      linkMd: {
+        fontSize: 16,
+        fontHeight: 20,
+        fontWeight: "normal",
+      },
+      linkSm: {
+        fontSize: 12,
+        fontHeight: 16,
+        fontWeight: "normal",
+      },
+      strikethroughMd: {
+        fontSize: 16,
+        fontHeight: 16,
+        fontWeight: "normal",
+      },
+      strikethroughSm: {
+        fontSize: 12,
+        fontHeight: 12,
+        fontWeight: "normal",
+      },
+      pillMd: {
+        fontSize: 16,
+        fontHeight: 16,
+        fontWeight: "normal",
+      },
+      pillSm: {
+        fontSize: 12,
+        fontHeight: 12,
+        fontWeight: "normal",
+      },
     },
   },
 };
