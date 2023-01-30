@@ -11,35 +11,35 @@ import {
 const AppTheme: AppThemeI = {
   pallete: {
     primary: {
-      light: "#FFE7C3",
+      light: "#FDE8CA",
       main: "#FFA825",
-      dark: "#FCBA56",
+      dark: "#DD8B0F",
     },
     secondary: {
       light: "#DFF5FF",
       main: "#25BEFF",
-      dark: "#72C9EF",
+      dark: "#3AA1CE",
     },
     accent: {
       error: {
-        light: "#FFACA7",
+        light: "#FBCBC8",
         main: "#FF6B62",
-        dark: "#FF3528",
+        dark: "#D51309",
       },
       success: {
-        light: "#8CFFBA",
-        main: "#53FA96",
-        dark: "#1DFF77",
+        light: "#C0FFD9",
+        main: "#2FE879",
+        dark: "#02973d",
       },
       warn: {
-        light: "#FFE790",
+        light: "#FBEEC0",
         main: "#FFD84D",
-        dark: "#FECC1A",
+        dark: "#DDB00E",
       },
       info: {
-        light: "#C7ACFF",
+        light: "#D9C8FF",
         main: "#864DFF",
-        dark: "#641BFF",
+        dark: "#5114D2",
       },
     },
     ui: {
