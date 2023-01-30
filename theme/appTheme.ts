@@ -1,80 +1,14 @@
-//App Theme Color Pallete
-interface ColorPallete {
-  light: string;
-  main: string;
-  dark: string;
-}
-
-//App Theme Text
-interface Text {
-  fontSize: number;
-  fontWeight: ("normal" | "bold" | "bolder") | number;
-  fontHeight: number;
-}
-
-//App Theme
-interface AppTheme {
-  pallete: {
-    primary: ColorPallete;
-    secondary: ColorPallete;
-    accent: {
-      error: ColorPallete;
-      success: ColorPallete;
-      warn: ColorPallete;
-      info: ColorPallete;
-    };
-    ui: {
-      black: string;
-      white: string;
-      gray: ColorPallete;
-    };
-    background: {
-      white: string;
-      gray: string;
-    };
-    text: {
-      white: string;
-      black: string;
-      gray: ColorPallete;
-      primary: string;
-      secondary: string;
-      error: string;
-      success: string;
-      warn: string;
-      info: string;
-    };
-  };
-  typography: {
-    fontFamily: string;
-    headings: {
-      h1: Text;
-      h2: Text;
-      h3: Text;
-      h4: Text;
-      h5: Text;
-      h6: Text;
-    };
-    text: {
-      bodyLg: Text;
-      bodyMd: Text;
-      bodySm: Text;
-      bodySmAlt: Text;
-      label: Text;
-      Hint: Text;
-    };
-    interaction: {
-      linkMd: Text;
-      linkSm: Text;
-      strikethroughMd: Text;
-      strikethroughSm: Text;
-      pillMd: Text;
-      pillSm: Text;
-    };
-  };
-}
+import { assertUnreachable } from "../utils/utils";
+import {
+  ColorPallete,
+  ColorPalleteOptions,
+  Space,
+  SpacingOptions,
+  AppTheme as AppThemeI,
+} from "./appThemeModel";
 
 //Theme Provider
-const themeProvider: AppTheme = {
+const AppTheme: AppThemeI = {
   pallete: {
     primary: {
       light: "#FFE7C3",
@@ -236,6 +170,62 @@ const themeProvider: AppTheme = {
       },
     },
   },
+  spacer(...args: number[]): number[] | number {
+    const base = 8;
+    const arr = args.map((arg) => arg * base);
+    if (arr.length === 1) return arr[0];
+    return arr;
+  },
 };
 
-export default themeProvider;
+//Get Color Pallete
+export const getColorPallete = ({
+  color = "primary",
+}: ColorPalleteOptions): ColorPallete => {
+  switch (color) {
+    case "primary":
+      return AppTheme.pallete.primary;
+    case "secondary":
+      return AppTheme.pallete.secondary;
+    case "error":
+      return AppTheme.pallete.accent.error;
+    case "success":
+      return AppTheme.pallete.accent.success;
+    case "warn":
+      return AppTheme.pallete.accent.warn;
+    case "info":
+      return AppTheme.pallete.accent.info;
+    default:
+      return assertUnreachable(color);
+  }
+};
+
+//Get Spacing
+export const getSpacing = ({ size, space }: SpacingOptions): Space => {
+  const [horizontal, vertical] = AppTheme.spacer(
+    space.horizontal,
+    space.vertical
+  ) as number[];
+
+  switch (size) {
+    case "sm":
+      return {
+        horizontal,
+        vertical,
+      };
+    case "md":
+      return {
+        horizontal: horizontal * 2,
+        vertical: vertical * 2,
+      };
+    case "lg":
+      return {
+        horizontal: horizontal * 3,
+        vertical: vertical * 3,
+      };
+    default:
+      return assertUnreachable(size);
+  }
+};
+
+export default AppTheme;
