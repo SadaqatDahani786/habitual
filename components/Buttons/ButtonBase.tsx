@@ -20,6 +20,7 @@ export interface ButtonBaseProps extends ColorPalleteOptions {
   size?: sizes;
   roundedCorners?: cornerRadius;
   disabled?: booleanAlt;
+  showRipple?: booleanAlt;
   fullWidth?: booleanAlt;
   onPress?(): void;
 }
@@ -36,6 +37,7 @@ const ButtonBase = ({
   roundedCorners = "md",
   disabled = false,
   fullWidth = false,
+  showRipple = true,
   onPress,
   children,
 }: ButtonBaseProps): JSX.Element => {
@@ -113,7 +115,9 @@ const ButtonBase = ({
       <Pressable
         android_ripple={{
           color:
-            !disabled || disabled === "false"
+            (!disabled || disabled === "false") &&
+            showRipple &&
+            showRipple === "true"
               ? variant === "soft"
                 ? colorPallete.dark
                 : colorPallete.light
