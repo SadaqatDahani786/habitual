@@ -114,6 +114,12 @@ const Typography = ({
       fontWeight: getFontVariant({ variant } as TypographyProps).fontWeight,
       fontHeight: getFontVariant({ variant } as TypographyProps).fontHeight,
       color: selectedColor,
+      textDecorationLine:
+        variant === "strikethroughMd" || variant === "strikethroughSm"
+          ? "line-through"
+          : variant === "linkMd" || variant === "linkSm"
+          ? "underline"
+          : "none",
     },
   });
   return <Text style={styles.text}>{children}</Text>;
