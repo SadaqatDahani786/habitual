@@ -2,19 +2,25 @@ import { StyleSheet, Pressable, View } from "react-native";
 
 //Theme
 import { getColorPallete, getSpacing } from "../../theme/appTheme";
-import { ColorPalleteOptions } from "../../theme/appThemeModel";
+import {
+  booleanAlt,
+  ColorPalleteOptions,
+  cornerRadius,
+  sizes,
+  variants,
+} from "../../theme/appThemeModel";
 
 //Utils
 import { assertUnreachable } from "../../utils/utils";
 
 //Button Base Props
-interface ButtonBaseProps extends ColorPalleteOptions {
-  children: React.ReactNode;
-  variant?: "plain" | "solid" | "soft" | "outlined";
-  size?: "sm" | "md" | "lg";
-  roundedCorners?: "none" | "sm" | "md" | "lg" | "full";
-  disabled?: "true" | "false" | boolean;
-  fullWidth?: "true" | "false" | boolean;
+export interface ButtonBaseProps extends ColorPalleteOptions {
+  children?: React.ReactNode;
+  variant?: variants;
+  size?: sizes;
+  roundedCorners?: cornerRadius;
+  disabled?: booleanAlt;
+  fullWidth?: booleanAlt;
   onPress?(): void;
 }
 
