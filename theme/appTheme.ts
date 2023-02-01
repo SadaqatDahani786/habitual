@@ -5,6 +5,7 @@ import {
   Space,
   SpacingOptions,
   AppTheme as AppThemeI,
+  sizes,
 } from "./appThemeModel";
 
 //Theme Provider
@@ -207,6 +208,9 @@ export const getSpacing = ({ size, space }: SpacingOptions): Space => {
     space.vertical
   ) as number[];
 
+  const space1x = AppTheme.spacer(1) as number;
+  const space2x = AppTheme.spacer(2) as number;
+
   switch (size) {
     case "sm":
       return {
@@ -215,14 +219,31 @@ export const getSpacing = ({ size, space }: SpacingOptions): Space => {
       };
     case "md":
       return {
-        horizontal: horizontal * 2,
-        vertical: vertical * 2,
+        horizontal: horizontal + space1x,
+        vertical: vertical + space1x,
       };
     case "lg":
       return {
-        horizontal: horizontal * 3,
-        vertical: vertical * 3,
+        horizontal: horizontal + space2x,
+        vertical: vertical + space2x,
       };
+    default:
+      return assertUnreachable(size);
+  }
+};
+
+//Get Size
+export const getSize = (
+  size: sizes,
+  sizeIncrements: [number, number, number]
+): number => {
+  switch (size) {
+    case "sm":
+      return AppTheme.spacer(sizeIncrements[0]) as number;
+    case "md":
+      return AppTheme.spacer(sizeIncrements[1]) as number;
+    case "lg":
+      return AppTheme.spacer(sizeIncrements[2]) as number;
     default:
       return assertUnreachable(size);
   }

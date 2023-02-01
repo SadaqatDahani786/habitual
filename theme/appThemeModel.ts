@@ -1,3 +1,37 @@
+/**
+ ** **
+ ** ** ** TYPE ALIASES
+ ** **
+ */
+//Colors Type
+export type colors =
+  | "primary"
+  | "secondary"
+  | "error"
+  | "success"
+  | "warn"
+  | "info";
+
+//Colos Dark Light Type
+export type colorDarkLight = "dark" | "light";
+
+//Sizes Type
+export type sizes = "sm" | "md" | "lg";
+
+//Variants Type
+export type variants = "plain" | "outlined" | "soft" | "solid";
+
+//Corner Radius Type
+export type cornerRadius = "none" | "sm" | "md" | "lg" | "full";
+
+//Boolean Type
+export type booleanAlt = "true" | "false" | boolean;
+
+/**
+ ** **
+ ** ** ** INTERFACES
+ ** **
+ */
 //Color Pallete
 export interface ColorPallete {
   light: string;
@@ -7,7 +41,12 @@ export interface ColorPallete {
 
 // Color Pallete Options
 export interface ColorPalleteOptions {
-  color?: "primary" | "secondary" | "error" | "success" | "warn" | "info";
+  color?: colors;
+}
+
+// Color Pallete Options
+export interface ColorPalleteOptionsAlt {
+  color?: colors | colorDarkLight;
 }
 
 //App Theme Text
@@ -25,7 +64,7 @@ export interface Space {
 
 //Spacing Options
 export interface SpacingOptions {
-  size: "sm" | "md" | "lg";
+  size: sizes;
   space: Space;
 }
 
