@@ -73,7 +73,7 @@ const AppTheme: AppThemeI = {
     },
   },
   typography: {
-    fontFamily: "Arial",
+    fontFamily: "sans-serif",
     headings: {
       h1: {
         fontSize: 40,
@@ -142,12 +142,12 @@ const AppTheme: AppThemeI = {
       linkMd: {
         fontSize: 16,
         fontHeight: 20,
-        fontWeight: "normal",
+        fontWeight: "bold",
       },
       linkSm: {
         fontSize: 12,
         fontHeight: 16,
-        fontWeight: "normal",
+        fontWeight: "bold",
       },
       strikethroughMd: {
         fontSize: 16,

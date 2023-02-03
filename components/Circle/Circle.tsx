@@ -41,7 +41,7 @@ const Circle = ({
       width: size === "md" ? 500 : 300,
       height: size === "md" ? 500 : 300,
       borderRadius: 1000,
-      backgroundColor: selectedColor.light,
+      backgroundColor: selectedColor.main + 80,
       position: "absolute",
       top,
       right,
