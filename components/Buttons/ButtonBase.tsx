@@ -116,8 +116,7 @@ const ButtonBase = ({
         android_ripple={{
           color:
             (!disabled || disabled === "false") &&
-            showRipple &&
-            showRipple === "true"
+            (showRipple === true || showRipple === "true")
               ? variant === "soft"
                 ? colorPallete.dark
                 : colorPallete.light

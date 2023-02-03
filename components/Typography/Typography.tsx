@@ -110,6 +110,7 @@ const Typography = ({
    */
   const styles = StyleSheet.create({
     text: {
+      fontFamily: AppTheme.typography.fontFamily,
       fontSize: getFontVariant({ variant } as TypographyProps).fontSize,
       fontWeight: getFontVariant({ variant } as TypographyProps).fontWeight,
       fontHeight: getFontVariant({ variant } as TypographyProps).fontHeight,
