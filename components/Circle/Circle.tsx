@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { Animated, StyleSheet } from "react-native";
 import { getColorPallete } from "../../theme/appTheme";
 import { ColorPalleteOptions } from "../../theme/appThemeModel";
 
@@ -9,6 +9,11 @@ interface CircleProps extends ColorPalleteOptions {
   bottom?: number | undefined;
   left?: number | undefined;
   right?: number | undefined;
+  animatedProps?: {
+    backgroundColor?: Animated.AnimatedInterpolation<string>;
+    top?: Animated.AnimatedInterpolation<number>;
+    left?: Animated.AnimatedInterpolation<number>;
+  };
 }
 
 /**
@@ -19,10 +24,11 @@ interface CircleProps extends ColorPalleteOptions {
 const Circle = ({
   size = "md",
   color = "primary",
-  top,
+  top = 0,
   bottom,
-  left,
+  left = 0,
   right,
+  animatedProps,
 }: CircleProps) => {
   /**
    ** **
@@ -44,12 +50,13 @@ const Circle = ({
       backgroundColor: selectedColor.main + 80,
       position: "absolute",
       top,
-      right,
       left,
       bottom,
+      right,
     },
   });
-  return <View style={styles.container} />;
+
+  return <Animated.View style={[styles.container, { ...animatedProps }]} />;
 };
 
 export default Circle;
