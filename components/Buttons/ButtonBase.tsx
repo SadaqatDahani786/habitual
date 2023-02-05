@@ -101,8 +101,14 @@ const ButtonBase = ({
       overflow: "hidden",
     },
     pressable: {
-      paddingHorizontal: padding.horizontal,
-      paddingVertical: padding.vertical,
+      paddingHorizontal:
+        (!showRipple || showRipple === "false") && variant === "plain"
+          ? 0
+          : padding.horizontal,
+      paddingVertical:
+        (!showRipple || showRipple === "false") && variant === "plain"
+          ? 0
+          : padding.vertical,
       display: "flex",
       flexDirection: "row",
       justifyContent: "center",
