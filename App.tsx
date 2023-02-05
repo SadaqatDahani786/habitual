@@ -1,8 +1,16 @@
-import { StatusBar } from "expo-status-bar";
+import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
+
+import { StatusBar } from "expo-status-bar";
+import { useFonts } from "expo-font";
+import { hideAsync, preventAutoHideAsync } from "expo-splash-screen";
 
 //Screens
 import WelcomeScreen from "./screens/Welcome Screen";
+
+//Fonts
+import Inter from "./assets/fonts/Inter.ttf";
+import InterSemiBold from "./assets/fonts/Inter-SemiBold.ttf";
 
 /**
  ** ============================================================================
@@ -10,6 +18,27 @@ import WelcomeScreen from "./screens/Welcome Screen";
  ** ============================================================================
  */
 const App = () => {
+  /*
+   ** **
+   ** ** ** Start & Vars
+   ** **
+   */
+  const [fontsLoaded] = useFonts({
+    Inter,
+    InterSemiBold,
+  });
+
+  /*
+   ** **
+   ** ** ** Methods
+   ** **
+   */
+  //Keep showing splash screen until fonts are loaded
+  useEffect(() => {
+    if (!fontsLoaded) preventAutoHideAsync();
+    else hideAsync();
+  }, [fontsLoaded]);
+
   /**
    ** **
    ** ** ** WelcomeScreen Styles
@@ -27,6 +56,9 @@ const App = () => {
       color: "black",
     },
   });
+
+  //Font Loading
+  if (!fontsLoaded) return;
 
   return (
     <View style={styles.container}>

@@ -58,7 +58,6 @@ const Typography = ({
    ** ** ** Methods
    ** **
    */
-
   //Get Font Variant
   const getFontVariant = ({ variant = "bodyMd" }: TypographyProps) => {
     switch (variant) {
@@ -108,12 +107,15 @@ const Typography = ({
    ** ** ** Typograpy Styles
    ** **
    */
+  const selectedFont = getFontVariant({ variant } as TypographyProps);
   const styles = StyleSheet.create({
     text: {
-      fontFamily: AppTheme.typography.fontFamily,
-      fontSize: getFontVariant({ variant } as TypographyProps).fontSize,
-      fontWeight: getFontVariant({ variant } as TypographyProps).fontWeight,
-      fontHeight: getFontVariant({ variant } as TypographyProps).fontHeight,
+      fontFamily: selectedFont.fontFamily
+        ? selectedFont.fontFamily
+        : AppTheme.typography.fontFamily,
+      fontSize: selectedFont.fontSize,
+      fontWeight: selectedFont.fontWeight,
+      lineHeight: selectedFont.fontHeight,
       color: selectedColor,
       textDecorationLine:
         variant === "strikethroughMd" || variant === "strikethroughSm"

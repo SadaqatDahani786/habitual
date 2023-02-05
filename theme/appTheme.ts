@@ -73,37 +73,43 @@ const AppTheme: AppThemeI = {
     },
   },
   typography: {
-    fontFamily: "sans-serif",
+    fontFamily: "Inter",
     headings: {
       h1: {
         fontSize: 40,
         fontHeight: 40,
-        fontWeight: "bold",
+        fontWeight: "600",
+        fontFamily: "InterSemiBold",
       },
       h2: {
         fontSize: 32,
         fontHeight: 36,
-        fontWeight: "bold",
+        fontWeight: "600",
+        fontFamily: "InterSemiBold",
       },
       h3: {
         fontSize: 28,
         fontHeight: 32,
-        fontWeight: "bold",
+        fontWeight: "600",
+        fontFamily: "InterSemiBold",
       },
       h4: {
         fontSize: 20,
         fontHeight: 24,
-        fontWeight: "bold",
+        fontWeight: "600",
+        fontFamily: "InterSemiBold",
       },
       h5: {
         fontSize: 16,
         fontHeight: 24,
-        fontWeight: "bold",
+        fontWeight: "600",
+        fontFamily: "InterSemiBold",
       },
       h6: {
         fontSize: 12,
         fontHeight: 12,
-        fontWeight: "bold",
+        fontWeight: "600",
+        fontFamily: "InterSemiBold",
       },
     },
     text: {
@@ -125,7 +131,8 @@ const AppTheme: AppThemeI = {
       bodySmAlt: {
         fontSize: 12,
         fontHeight: 16,
-        fontWeight: "bold",
+        fontWeight: "600",
+        fontFamily: "InterSemiBold",
       },
       label: {
         fontSize: 12,
@@ -142,12 +149,14 @@ const AppTheme: AppThemeI = {
       linkMd: {
         fontSize: 16,
         fontHeight: 20,
-        fontWeight: "bold",
+        fontWeight: "600",
+        fontFamily: "InterSemiBold",
       },
       linkSm: {
         fontSize: 12,
         fontHeight: 16,
-        fontWeight: "bold",
+        fontWeight: "600",
+        fontFamily: "InterSemiBold",
       },
       strikethroughMd: {
         fontSize: 16,

@@ -51,6 +51,7 @@ export interface ColorPalleteOptionsAlt {
 
 //App Theme Text
 export interface Text {
+  fontFamily?: string;
   fontSize: number;
   fontWeight:
     | "normal"
