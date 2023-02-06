@@ -5,6 +5,10 @@ import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import { hideAsync, preventAutoHideAsync } from "expo-splash-screen";
 
+//Navigation
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
 //Screens
 import WelcomeScreen from "./screens/Welcome Screen";
 import OnboardingScreen from "./screens/Onboarding Screen";
@@ -12,6 +16,9 @@ import OnboardingScreen from "./screens/Onboarding Screen";
 //Fonts
 import Inter from "./assets/fonts/Inter.ttf";
 import InterSemiBold from "./assets/fonts/Inter-SemiBold.ttf";
+
+//Navigators
+const Stack = createNativeStackNavigator();
 
 /**
  ** ============================================================================
@@ -40,33 +47,21 @@ const App = () => {
     else hideAsync();
   }, [fontsLoaded]);
 
-  /**
-   ** **
-   ** ** ** WelcomeScreen Styles
-   ** **
-   */
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: "#fff",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    text: {
-      fontSize: 16,
-      color: "black",
-    },
-  });
-
   //Font Loading
   if (!fontsLoaded) return;
 
   return (
-    <View style={styles.container}>
-      {/* <WelcomeScreen /> */}
-      <OnboardingScreen />
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+        <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
+      </Stack.Navigator>
       <StatusBar style="auto" />
-    </View>
+    </NavigationContainer>
   );
 };
 

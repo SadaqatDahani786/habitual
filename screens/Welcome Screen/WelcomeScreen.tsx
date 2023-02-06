@@ -1,4 +1,5 @@
 import { StyleSheet, View } from "react-native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 //App Theme
 import AppTheme from "../../theme/appTheme";
@@ -11,12 +12,21 @@ import Link from "../../components/Link";
 import Logo from "../../components/Logo";
 import Typography from "../../components/Typography";
 
+//WelcomeScreen Props
+interface WelcomeScreenProps {
+  navigation: NativeStackNavigationProp<any, any>;
+}
+
 /**
  ** ============================================================================
  ** Component [WelcomeScreen]
  ** ============================================================================
  */
-const WelcomeScreen = () => {
+const WelcomeScreen = ({ navigation }: WelcomeScreenProps) => {
+  const onPressSignupHandler = () => {
+    navigation.navigate("OnboardingScreen");
+  };
+
   /**
    ** **
    ** ** ** WelcomeScreen Styles
@@ -75,6 +85,7 @@ const WelcomeScreen = () => {
           color="primary"
           variant="solid"
           title="Sign up"
+          onPress={onPressSignupHandler}
         />
         <View style={styles.buttonWrapper}>
           <Typography variant="bodyMd">Already have an account?</Typography>
