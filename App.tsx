@@ -7,6 +7,7 @@ import { hideAsync, preventAutoHideAsync } from "expo-splash-screen";
 
 //Screens
 import WelcomeScreen from "./screens/Welcome Screen";
+import OnboardingScreen from "./screens/Onboarding Screen";
 
 //Fonts
 import Inter from "./assets/fonts/Inter.ttf";
@@ -62,7 +63,8 @@ const App = () => {
 
   return (
     <View style={styles.container}>
-      <WelcomeScreen />
+      {/* <WelcomeScreen /> */}
+      <OnboardingScreen />
       <StatusBar style="auto" />
     </View>
   );
