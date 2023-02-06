@@ -29,6 +29,7 @@ interface TypographyProps extends ColorPalleteOptionsAlt {
     | "strikethroughSm"
     | "pillMd"
     | "pillSm";
+  textAlignment?: "left" | "center" | "right";
 }
 
 /**
@@ -39,6 +40,7 @@ interface TypographyProps extends ColorPalleteOptionsAlt {
 const Typography = ({
   variant = "bodyMd",
   color = "dark",
+  textAlignment = "left",
   children,
 }: TypographyProps) => {
   /**
@@ -117,6 +119,7 @@ const Typography = ({
       fontWeight: selectedFont.fontWeight,
       lineHeight: selectedFont.fontHeight,
       color: selectedColor,
+      textAlign: textAlignment,
       textDecorationLine:
         variant === "strikethroughMd" || variant === "strikethroughSm"
           ? "line-through"
