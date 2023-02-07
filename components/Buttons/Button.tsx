@@ -1,4 +1,4 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import AppTheme, { getColorPallete } from "../../theme/appTheme";
 import { ColorPalleteOptions } from "../../theme/appThemeModel";
@@ -72,6 +72,11 @@ const Button = ({
    ** **
    */
   const styles = StyleSheet.create({
+    textWrapper: {
+      flex: 1,
+      display: "flex",
+      alignItems: "center",
+    },
     text: {
       fontSize: getSelectedSize({ size } as ButtonProps),
       fontWeight: "bold",
@@ -96,9 +101,11 @@ const Button = ({
       onPress={onPress}
       fullWidth={fullWidth}
     >
-      {iconStart && iconStart}
-      <Text style={styles.text}>{title}</Text>
-      {iconEnd && iconEnd}
+      {iconStart && <View style={styles.iconStart}>{iconStart}</View>}
+      <View style={styles.textWrapper}>
+        <Text style={styles.text}>{title}</Text>
+      </View>
+      {iconEnd && <View style={styles.iconEnd}>{iconEnd}</View>}
     </ButtonBase>
   );
 };
