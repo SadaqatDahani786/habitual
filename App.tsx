@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { StyleSheet, View } from "react-native";
 
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
@@ -12,6 +11,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 //Screens
 import WelcomeScreen from "./screens/Welcome Screen";
 import OnboardingScreen from "./screens/Onboarding Screen";
+import LoginScreen from "./screens/Login Screen";
 
 //Fonts
 import Inter from "./assets/fonts/Inter.ttf";
@@ -59,6 +59,7 @@ const App = () => {
       >
         <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
         <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
+        <Stack.Screen name="LoginScreen" component={LoginScreen} />
       </Stack.Navigator>
       <StatusBar style="auto" />
     </NavigationContainer>
