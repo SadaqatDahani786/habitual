@@ -23,8 +23,19 @@ interface WelcomeScreenProps {
  ** ============================================================================
  */
 const WelcomeScreen = ({ navigation }: WelcomeScreenProps) => {
+  /**
+   ** **
+   ** ** ** Methods
+   ** **
+   */
+  //Press Signup Button Handler
   const onPressSignupHandler = () => {
     navigation.navigate("OnboardingScreen");
+  };
+
+  //Press Login Button Handler
+  const onPressLoginHandler = () => {
+    navigation.navigate("LoginScreen");
   };
 
   /**
@@ -64,6 +75,10 @@ const WelcomeScreen = ({ navigation }: WelcomeScreenProps) => {
       flexDirection: "row",
       justifyContent: "center",
       alignItems: "center",
+      height: AppTheme.spacer(6) as number,
+    },
+    linkWrapper: {
+      paddingLeft: AppTheme.spacer(1) as number,
     },
   });
 
@@ -89,7 +104,9 @@ const WelcomeScreen = ({ navigation }: WelcomeScreenProps) => {
         />
         <View style={styles.buttonWrapper}>
           <Typography variant="bodyMd">Already have an account?</Typography>
-          <Link color="dark" text="Log In" />
+          <View style={styles.linkWrapper}>
+            <Link color="dark" text="Log In" onPress={onPressLoginHandler} />
+          </View>
         </View>
       </View>
     </View>

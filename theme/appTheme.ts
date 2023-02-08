@@ -138,6 +138,7 @@ const AppTheme: AppThemeI = {
         fontSize: 12,
         fontHeight: 12,
         fontWeight: "normal",
+        fontFamily: "InterSemiBold",
       },
       Hint: {
         fontSize: 10,
