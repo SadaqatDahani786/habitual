@@ -6,8 +6,8 @@ import {
   variants,
 } from "../../theme/appThemeModel";
 
-//IconBase Props
-interface IconBaseProps extends ColorPalleteOptions {
+//IconButton Props
+interface IconButtonProps extends ColorPalleteOptions {
   size?: sizes;
   variant?: variants;
   icon: React.ReactNode;
@@ -25,7 +25,7 @@ const IconButton = ({
   size = "lg",
   icon,
   onPress,
-}: IconBaseProps) => {
+}: IconButtonProps) => {
   /**
    ** **
    ** ** ** State & Vars
