@@ -135,9 +135,14 @@ const Textfield = ({
 
   return (
     <View style={styles.container}>
-      <Typography variant="label" color="dark">
-        {label}
-      </Typography>
+      {label ? (
+        <Typography variant="label" color="dark">
+          {label}
+        </Typography>
+      ) : (
+        ""
+      )}
+
       <View style={styles.wrapper}>
         {iconStart && iconStart}
         <TextInput
