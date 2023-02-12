@@ -63,6 +63,10 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
     });
   }, []);
 
+  const pressSignupButtonHandler = () => {
+    navigation.navigate("SignupScreen");
+  };
+
   /**
    ** **
    ** ** ** Styles
@@ -182,7 +186,7 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
         <View style={styles.wrapper}>
           <Typography variant="bodySm">New to habitual?</Typography>
           <View style={styles.text}>
-            <Link text="Sign up" size="sm" />
+            <Link text="Sign up" size="sm" onPress={pressSignupButtonHandler} />
           </View>
         </View>
       </View>

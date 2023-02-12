@@ -12,6 +12,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import WelcomeScreen from "./screens/Welcome Screen";
 import OnboardingScreen from "./screens/Onboarding Screen";
 import LoginScreen from "./screens/Login Screen";
+import {
+  SignupScreen,
+  SignupScreen02,
+  SignupScreen03,
+  SignupScreen04,
+  SignupScreen05,
+} from "./screens/Signup Screen";
 
 //Fonts
 import Inter from "./assets/fonts/Inter.ttf";
@@ -60,6 +67,35 @@ const App = () => {
         <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
         <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
         <Stack.Screen name="LoginScreen" component={LoginScreen} />
+        <Stack.Screen name="SignupScreen" component={SignupScreen} />
+        <Stack.Screen
+          name="SignupScreen02"
+          component={SignupScreen02}
+          options={{
+            animation: "slide_from_right",
+          }}
+        />
+        <Stack.Screen
+          name="SignupScreen03"
+          component={SignupScreen03}
+          options={{
+            animation: "slide_from_right",
+          }}
+        />
+        <Stack.Screen
+          name="SignupScreen04"
+          component={SignupScreen04}
+          options={{
+            animation: "slide_from_right",
+          }}
+        />
+        <Stack.Screen
+          name="SignupScreen05"
+          component={SignupScreen05}
+          options={{
+            animation: "slide_from_right",
+          }}
+        />
       </Stack.Navigator>
       <StatusBar style="auto" />
     </NavigationContainer>

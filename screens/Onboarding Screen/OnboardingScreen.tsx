@@ -1,3 +1,4 @@
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { View } from "react-native";
 
 //UI Components
@@ -9,12 +10,17 @@ import Rocket from "../../components/Illustrations/Rocket";
 import Storefront from "../../components/Illustrations/Storefront";
 import Women from "../../components/Illustrations/Women";
 
+//Onboarding Props
+interface OnboardingProps {
+  navigation: NativeStackNavigationProp<any, any>;
+}
+
 /**
  ** ============================================================================
  ** Component [Onboarding]
  ** ============================================================================
  */
-const Onboarding = () => {
+const Onboarding = ({ navigation }: OnboardingProps) => {
   /**
    ** **
    ** ** ** Start & Vars
@@ -60,7 +66,9 @@ const Onboarding = () => {
   const onSkipHandler = () => {};
 
   //Executed when onboarding is finished
-  const onOnboardingFinishHandler = () => {};
+  const onOnboardingFinishHandler = () => {
+    navigation.navigate("SignupScreen");
+  };
 
   return (
     <View style={{ height: "100%", width: "100%" }}>
