@@ -30,6 +30,7 @@ interface TypographyProps extends ColorPalleteOptionsAlt {
     | "pillMd"
     | "pillSm";
   textAlignment?: "left" | "center" | "right";
+  style?: {};
 }
 
 /**
@@ -42,6 +43,7 @@ const Typography = ({
   color = "dark",
   textAlignment = "left",
   children,
+  style,
 }: TypographyProps) => {
   /**
    ** **
@@ -126,6 +128,7 @@ const Typography = ({
           : variant === "linkMd" || variant === "linkSm"
           ? "underline"
           : "none",
+      ...style,
     },
   });
   return <Text style={styles.text}>{children}</Text>;

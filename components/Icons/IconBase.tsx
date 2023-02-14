@@ -48,7 +48,8 @@ export type Icons =
   | "trash"
   | "edit"
   | "image"
-  | "credit-card";
+  | "credit-card"
+  | "dollar-sign";
 
 //Type Icons Filled
 export type IconsFilled =
@@ -92,7 +93,8 @@ export type IconsFilled =
   | "image"
   | "credit-card"
   | "google"
-  | "apple";
+  | "apple"
+  | "dollar";
 
 //Icon Base Props
 export interface IconBaseProps<T = Icons> extends ColorPalleteOptionsAlt {
@@ -125,7 +127,7 @@ const IconBase = <T = Icons,>({
       ? AppTheme.pallete.ui.black
       : color === "light"
       ? AppTheme.pallete.ui.white
-      : getColorPallete({ color } as ColorPalleteOptions).dark;
+      : getColorPallete({ color } as ColorPalleteOptions).main;
 
   //Selected Size
   const selectedSize = getSize(size, [2, 3, 4]);
