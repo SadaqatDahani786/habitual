@@ -10,6 +10,7 @@ import Typography from "../Typography";
 //Pill Props
 interface PillProps extends ColorPalleteOptions {
   text?: string;
+  size?: "sm" | "md";
 }
 
 /**
@@ -17,7 +18,7 @@ interface PillProps extends ColorPalleteOptions {
  ** Component [Pill]
  ** ============================================================================
  */
-const Pill = ({ text, color = "primary" }: PillProps) => {
+const Pill = ({ text, color = "primary", size = "md" }: PillProps) => {
   /**
    ** **
    ** ** ** State & Vars
@@ -33,8 +34,8 @@ const Pill = ({ text, color = "primary" }: PillProps) => {
   const styles = StyleSheet.create({
     container: {
       backgroundColor: colorPallete.light,
-      paddingVertical: 8,
-      paddingHorizontal: 16,
+      paddingVertical: size === "sm" ? 4 : 8,
+      paddingHorizontal: size === "sm" ? 8 : 16,
       borderRadius: 100,
     },
   });

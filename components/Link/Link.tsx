@@ -6,6 +6,7 @@ import Typography from "../Typography";
 interface LinkProps extends ColorPalleteOptionsAlt {
   size?: "sm" | "md";
   text: string;
+  style?: {};
   onPress?(): void;
 }
 
@@ -14,10 +15,14 @@ interface LinkProps extends ColorPalleteOptionsAlt {
  ** Component [Link]
  ** ============================================================================
  */
-const Link = ({ text, size = "md", color, onPress }: LinkProps) => {
+const Link = ({ text, size = "md", style = {}, color, onPress }: LinkProps) => {
   return (
     <ButtonBase variant="plain" showRipple="false" onPress={onPress}>
-      <Typography color={color} variant={size === "sm" ? "linkSm" : "linkMd"}>
+      <Typography
+        style={style}
+        color={color}
+        variant={size === "sm" ? "linkSm" : "linkMd"}
+      >
         {text}
       </Typography>
     </ButtonBase>
