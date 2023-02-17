@@ -49,7 +49,9 @@ export type Icons =
   | "edit"
   | "image"
   | "credit-card"
-  | "dollar-sign";
+  | "dollar-sign"
+  | "plus"
+  | "minus";
 
 //Type Icons Filled
 export type IconsFilled =
@@ -94,7 +96,9 @@ export type IconsFilled =
   | "credit-card"
   | "google"
   | "apple"
-  | "dollar";
+  | "dollar"
+  | "plus"
+  | "minus";
 
 //Icon Base Props
 export interface IconBaseProps<T = Icons> extends ColorPalleteOptionsAlt {
