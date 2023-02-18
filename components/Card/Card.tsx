@@ -66,7 +66,7 @@ const Card = ({
       borderWidth: variant === "outlined" ? 1 : 0,
       borderColor: variant === "outlined" ? colorPallete.main : undefined,
       borderRadius: 8,
-      elevation: 4,
+      elevation: 1,
     },
     pressable: {
       height: "100%",

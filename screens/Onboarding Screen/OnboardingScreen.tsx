@@ -63,7 +63,9 @@ const Onboarding = ({ navigation }: OnboardingProps) => {
    ** **
    */
   //Executed when button skip is pressed
-  const onSkipHandler = () => {};
+  const onSkipHandler = () => {
+    navigation.navigate("HomeScreens");
+  };
 
   //Executed when onboarding is finished
   const onOnboardingFinishHandler = () => {

@@ -7,6 +7,7 @@ import { hideAsync, preventAutoHideAsync } from "expo-splash-screen";
 //Navigation
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 //Screens
 import WelcomeScreen from "./screens/Welcome Screen";
@@ -19,6 +20,10 @@ import {
   SignupScreen04,
   SignupScreen05,
 } from "./screens/Signup Screen";
+import Home from "./screens/Home";
+
+//UI Components
+import IconOutlined from "./components/Icons/IconOutlined";
 
 //Fonts
 import Inter from "./assets/fonts/Inter.ttf";
@@ -26,6 +31,31 @@ import InterSemiBold from "./assets/fonts/Inter-SemiBold.ttf";
 
 //Navigators
 const Stack = createNativeStackNavigator();
+const BottomTab = createBottomTabNavigator();
+
+/**
+ ** ============================================================================
+ ** Component [BottomTabNavigation]
+ ** ============================================================================
+ */
+const BottomTabNavigation = () => {
+  return (
+    <BottomTab.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <BottomTab.Screen
+        name="HomeScreen"
+        component={Home}
+        options={{
+          tabBarIcon: () => <IconOutlined name="home" color="dark" />,
+          tabBarShowLabel: false,
+        }}
+      />
+    </BottomTab.Navigator>
+  );
+};
 
 /**
  ** ============================================================================
@@ -96,6 +126,7 @@ const App = () => {
             animation: "slide_from_right",
           }}
         />
+        <Stack.Screen name="HomeScreens" component={BottomTabNavigation} />
       </Stack.Navigator>
       <StatusBar style="auto" />
     </NavigationContainer>

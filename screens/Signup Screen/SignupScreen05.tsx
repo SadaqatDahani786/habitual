@@ -157,7 +157,7 @@ const SignupScreen05 = ({ navigation }: SignupScreen05Props) => {
           title="Get started"
           variant="solid"
           color="primary"
-          onPress={() => navigation.navigate("SignupScreen05")}
+          onPress={() => navigation.navigate("HomeScreens")}
         />
         <Button
           title="Back"
