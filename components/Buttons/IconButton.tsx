@@ -1,13 +1,13 @@
 import { View, StyleSheet, Pressable } from "react-native";
 import AppTheme, { getColorPallete, getSize } from "../../theme/appTheme";
 import {
-  ColorPalleteOptions,
+  ColorPalleteOptionsAlt,
   sizes,
   variants,
 } from "../../theme/appThemeModel";
 
 //IconButton Props
-interface IconButtonProps extends ColorPalleteOptions {
+interface IconButtonProps extends ColorPalleteOptionsAlt {
   size?: sizes;
   variant?: variants;
   icon: React.ReactNode;
@@ -31,7 +31,16 @@ const IconButton = ({
    ** ** ** State & Vars
    ** **
    */
-  const colorPallete = getColorPallete({ color });
+  const colorPallete =
+    color === "dark"
+      ? AppTheme.pallete.ui.gray
+      : color === "light"
+      ? {
+          dark: AppTheme.pallete.ui.white,
+          light: AppTheme.pallete.ui.white,
+          main: AppTheme.pallete.ui.white,
+        }
+      : getColorPallete({ color });
   const selectedSize =
     getSize(size, [2, 3, 4]) + (AppTheme.spacer(3) as number);
 
@@ -68,7 +77,12 @@ const IconButton = ({
     <View style={styles.iconButton}>
       <Pressable
         android_ripple={{
-          color: variant === "soft" ? colorPallete.dark : colorPallete.light,
+          color:
+            color === "light"
+              ? AppTheme.pallete.ui.gray.light
+              : variant === "soft"
+              ? colorPallete.dark
+              : colorPallete.light,
         }}
         style={styles.pressable}
         onPress={onPress}

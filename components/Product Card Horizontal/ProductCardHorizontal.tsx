@@ -143,14 +143,14 @@ const ProductCardHorizontal = ({
         <View style={styles.productImage}>
           <View style={styles.wishlistButton}>
             <IconButton
-              color="primary"
+              color="light"
               onPress={onPressAddToWishlist}
               size={"sm"}
               icon={
                 isWishlisted === "true" || isWishlisted === true ? (
-                  <IconFilled size={"sm"} color="primary" name="heart" />
+                  <IconFilled size={"sm"} color="light" name="heart" />
                 ) : (
-                  <IconOutlined size={"sm"} color="primary" name="heart" />
+                  <IconOutlined size={"sm"} color="light" name="heart" />
                 )
               }
             />
