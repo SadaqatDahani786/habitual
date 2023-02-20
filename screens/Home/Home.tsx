@@ -1,8 +1,17 @@
-import { useRef, useState } from "react";
-import { StyleSheet, View, FlatList, ScrollView, Animated } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  ScrollView,
+  Animated,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { StatusBar } from "expo-status-bar";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 //App Theme
 import AppTheme from "../../theme/appTheme";
@@ -19,12 +28,20 @@ import Card from "../../components/Card";
 import ProductCard from "../../components/Product Card";
 import ProductCardHorizontal from "../../components/Product Card Horizontal/ProductCardHorizontal";
 
+//Custom Hooks
+import useAnimateStatusbarOnScroll from "../../hooks/useAnimateStatusbarOnScroll";
+
+//Home Props
+interface HomeProps {
+  navigation: NativeStackNavigationProp<any, any>;
+}
+
 /**
  ** ============================================================================
  ** Component [Home]
  ** ============================================================================
  */
-const Home = () => {
+const Home = ({ navigation }: HomeProps) => {
   /**
    ** **
    ** ** ** Dummy Data
@@ -255,14 +272,16 @@ const Home = () => {
     width: 0,
     height: 0,
   });
-  const [statusBarColor, setStatusBarColor] = useState<string | undefined>(
-    AppTheme.pallete.primary.main
-  );
 
   //Refs
   const scrollX = useRef(new Animated.Value(0)).current;
+  const scrollY = useRef(new Animated.Value(0)).current;
   const refScroll = useRef<FlatList>(null);
   const refView = useRef<View>(null);
+
+  //Custom Hooks
+  const [statusbarBgColorStatus, setStatusbarBgColorStatus] =
+    useAnimateStatusbarOnScroll();
 
   //Custom snap to offsets
   const customSnapToOffset = interests.map((_, i) => {
@@ -374,6 +393,15 @@ const Home = () => {
    ** ** ** Methods
    ** **
    */
+  //Set statusbar bg color when "this" tab gets focused
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", (e) => {
+      setStatusbarBgColorStatus(Number.parseInt(JSON.stringify(scrollY)));
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
   //OnPress interest item, scroll to it's position
   const scrollToItem = (ind: number): void => {
     const pos = customSnapToOffset[ind] - layout.width / 2 + 45;
@@ -391,21 +419,34 @@ const Home = () => {
     extrapolate: "clamp",
   });
 
+  //ScrollHandler
+  const onScrollHandler = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    setStatusbarBgColorStatus(e.nativeEvent.contentOffset.y);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
         style="auto"
-        backgroundColor={statusBarColor}
+        backgroundColor={
+          statusbarBgColorStatus ? AppTheme.pallete.primary.main : undefined
+        }
         animated={true}
         translucent={true}
       />
       <ScrollView
         bounces={false}
-        onScroll={(e) => {
-          const yOffset = e.nativeEvent.contentOffset.y;
-          if (yOffset > 300) setStatusBarColor(undefined);
-          else setStatusBarColor(AppTheme.pallete.primary.main);
-        }}
+        onScroll={Animated.event(
+          [
+            {
+              nativeEvent: { contentOffset: { y: scrollY } },
+            },
+          ],
+          {
+            useNativeDriver: false,
+            listener: onScrollHandler,
+          }
+        )}
         style={[styles.container, { zIndex: 100, position: "relative" }]}
         nestedScrollEnabled={true}
       >
@@ -431,7 +472,6 @@ const Home = () => {
         <View style={styles.wrapper}>
           <Button title="Discover More" variant="solid" />
         </View>
-
         <View style={styles.interests}>
           <View style={styles.headerTitle}>
             <Typography variant="bodySmAlt">
@@ -511,7 +551,6 @@ const Home = () => {
             </View>
           )}
         </View>
-
         <View style={styles.cardGrid}>
           <View style={styles.cardGridRow}>
             {cards.map((card, i) => (

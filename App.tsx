@@ -29,6 +29,10 @@ import IconOutlined from "./components/Icons/IconOutlined";
 import Inter from "./assets/fonts/Inter.ttf";
 import InterSemiBold from "./assets/fonts/Inter-SemiBold.ttf";
 
+//Redux
+import { Provider } from "react-redux";
+import store from "./store/store";
+
 //Navigators
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -88,48 +92,50 @@ const App = () => {
   if (!fontsLoaded) return;
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
-        <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
-        <Stack.Screen name="LoginScreen" component={LoginScreen} />
-        <Stack.Screen name="SignupScreen" component={SignupScreen} />
-        <Stack.Screen
-          name="SignupScreen02"
-          component={SignupScreen02}
-          options={{
-            animation: "slide_from_right",
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
           }}
-        />
-        <Stack.Screen
-          name="SignupScreen03"
-          component={SignupScreen03}
-          options={{
-            animation: "slide_from_right",
-          }}
-        />
-        <Stack.Screen
-          name="SignupScreen04"
-          component={SignupScreen04}
-          options={{
-            animation: "slide_from_right",
-          }}
-        />
-        <Stack.Screen
-          name="SignupScreen05"
-          component={SignupScreen05}
-          options={{
-            animation: "slide_from_right",
-          }}
-        />
-        <Stack.Screen name="HomeScreens" component={BottomTabNavigation} />
-      </Stack.Navigator>
-      <StatusBar style="auto" />
-    </NavigationContainer>
+        >
+          <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+          <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
+          <Stack.Screen name="LoginScreen" component={LoginScreen} />
+          <Stack.Screen name="SignupScreen" component={SignupScreen} />
+          <Stack.Screen
+            name="SignupScreen02"
+            component={SignupScreen02}
+            options={{
+              animation: "slide_from_right",
+            }}
+          />
+          <Stack.Screen
+            name="SignupScreen03"
+            component={SignupScreen03}
+            options={{
+              animation: "slide_from_right",
+            }}
+          />
+          <Stack.Screen
+            name="SignupScreen04"
+            component={SignupScreen04}
+            options={{
+              animation: "slide_from_right",
+            }}
+          />
+          <Stack.Screen
+            name="SignupScreen05"
+            component={SignupScreen05}
+            options={{
+              animation: "slide_from_right",
+            }}
+          />
+          <Stack.Screen name="HomeScreens" component={BottomTabNavigation} />
+        </Stack.Navigator>
+        <StatusBar style="auto" />
+      </NavigationContainer>
+    </Provider>
   );
 };
 
