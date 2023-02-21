@@ -21,6 +21,7 @@ import {
   SignupScreen05,
 } from "./screens/Signup Screen";
 import Home from "./screens/Home";
+import WishlistScreen from "./screens/Wishlist/WishlistScreen";
 
 //UI Components
 import IconOutlined from "./components/Icons/IconOutlined";
@@ -54,6 +55,14 @@ const BottomTabNavigation = () => {
         component={Home}
         options={{
           tabBarIcon: () => <IconOutlined name="home" color="dark" />,
+          tabBarShowLabel: false,
+        }}
+      />
+      <BottomTab.Screen
+        name="WishlistScreen"
+        component={WishlistScreen}
+        options={{
+          tabBarIcon: () => <IconOutlined name="heart" color="dark" />,
           tabBarShowLabel: false,
         }}
       />
