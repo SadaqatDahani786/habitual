@@ -29,6 +29,7 @@ interface ProductCardHorizontalProps {
   deliveryStatus?: DeliveryStatus;
   isWishlisted?: booleanAlt;
   showAddToCartButton?: booleanAlt;
+  disabled?: booleanAlt;
   onPressAddToWishlist?: () => void;
   onPressAddToCartHandler?: () => void;
   onPressItemHandler?: () => void;
@@ -48,6 +49,7 @@ const ProductCardHorizontal = ({
   categories = [],
   isStaffPicked = "true",
   isWishlisted = "false",
+  disabled = "false",
   showAddToCartButton = "false",
   deliveryStatus = "NONE",
   onPressAddToWishlist,
@@ -136,6 +138,7 @@ const ProductCardHorizontal = ({
   return (
     <View style={styles.container}>
       <Pressable
+        disabled={disabled === "true" || disabled === true}
         style={styles.pressable}
         android_ripple={{ color: AppTheme.pallete.secondary.light }}
         onPress={onPressItemHandler}
@@ -143,6 +146,11 @@ const ProductCardHorizontal = ({
         <View style={styles.productImage}>
           <View style={styles.wishlistButton}>
             <IconButton
+              disabled={
+                disabled === "true" || disabled === true
+                  ? "DEACTIVATED"
+                  : "DEFAULT"
+              }
               color="light"
               onPress={onPressAddToWishlist}
               size={"sm"}
@@ -263,6 +271,11 @@ const ProductCardHorizontal = ({
           {showAddToCartButton === "true" || showAddToCartButton === true ? (
             <View style={styles.buttonAddToCart}>
               <Button
+                disabled={
+                  disabled === "true" || disabled === true
+                    ? "DEACTIVATED"
+                    : "DEFAULT"
+                }
                 variant="solid"
                 title="Add To Cart"
                 size="sm"

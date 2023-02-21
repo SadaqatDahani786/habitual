@@ -15,6 +15,7 @@ interface CardProps extends ColorPalleteOptionsAlt {
   size?: sizes;
   variant?: variants;
   fullWidth?: booleanAlt;
+  disabled?: booleanAlt;
   children?: React.ReactNode;
   onPress?: () => void;
 }
@@ -30,6 +31,7 @@ const Card = ({
   color = "primary",
   variant = "solid",
   fullWidth = "false",
+  disabled = "false",
   onPress,
 }: CardProps) => {
   /*
@@ -77,6 +79,7 @@ const Card = ({
   return (
     <View style={styles.container}>
       <Pressable
+        disabled={disabled === "true" || disabled === true}
         onPress={onPress}
         style={styles.pressable}
         android_ripple={{

@@ -27,6 +27,9 @@ export type cornerRadius = "none" | "sm" | "md" | "lg" | "full";
 //Boolean Type
 export type booleanAlt = "true" | "false" | boolean;
 
+//Disable Type
+export type disabled = "DISABLED" | "DEACTIVATED" | "DEFAULT";
+
 /**
  ** **
  ** ** ** INTERFACES

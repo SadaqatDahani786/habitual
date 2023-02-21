@@ -6,6 +6,7 @@ import {
   booleanAlt,
   ColorPalleteOptions,
   cornerRadius,
+  disabled,
   sizes,
   variants,
 } from "../../theme/appThemeModel";
@@ -19,7 +20,7 @@ export interface ButtonBaseProps extends ColorPalleteOptions {
   variant?: variants;
   size?: sizes;
   roundedCorners?: cornerRadius;
-  disabled?: booleanAlt;
+  disabled?: disabled;
   showRipple?: booleanAlt;
   fullWidth?: booleanAlt;
   onPress?(): void;
@@ -35,7 +36,7 @@ const ButtonBase = ({
   color = "primary",
   size = "md",
   roundedCorners = "md",
-  disabled = false,
+  disabled = "DEFAULT",
   fullWidth = false,
   showRipple = true,
   onPress,
@@ -97,7 +98,7 @@ const ButtonBase = ({
       borderRadius: getSelectedRoundedCorners({
         roundedCorners,
       } as ButtonBaseProps),
-      opacity: disabled === "true" || disabled === true ? 0.2 : 1,
+      opacity: disabled === "DISABLED" ? 0.2 : 1,
       overflow: "hidden",
     },
     pressable: {
@@ -119,14 +120,9 @@ const ButtonBase = ({
   return (
     <View style={styles.container}>
       <Pressable
+        disabled={disabled === "DEACTIVATED" || disabled === "DISABLED"}
         android_ripple={{
-          color:
-            (!disabled || disabled === "false") &&
-            (showRipple === true || showRipple === "true")
-              ? variant === "soft"
-                ? colorPallete.dark
-                : colorPallete.light
-              : undefined,
+          color: variant === "soft" ? colorPallete.dark : colorPallete.light,
         }}
         onPress={onPress}
         style={styles.pressable}

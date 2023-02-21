@@ -2,6 +2,7 @@ import { View, StyleSheet, Pressable } from "react-native";
 import AppTheme, { getColorPallete, getSize } from "../../theme/appTheme";
 import {
   ColorPalleteOptionsAlt,
+  disabled,
   sizes,
   variants,
 } from "../../theme/appThemeModel";
@@ -11,6 +12,7 @@ interface IconButtonProps extends ColorPalleteOptionsAlt {
   size?: sizes;
   variant?: variants;
   icon: React.ReactNode;
+  disabled?: disabled;
   onPress?: () => void;
 }
 
@@ -24,6 +26,7 @@ const IconButton = ({
   color = "primary",
   size = "lg",
   icon,
+  disabled = "DEFAULT",
   onPress,
 }: IconButtonProps) => {
   /**
@@ -62,6 +65,7 @@ const IconButton = ({
       borderWidth: variant === "outlined" ? 1 : 0,
       borderColor: colorPallete.main,
       borderRadius: 100,
+      opacity: disabled === "DISABLED" ? 0.6 : 1,
       overflow: "hidden",
     },
     pressable: {
@@ -76,6 +80,7 @@ const IconButton = ({
   return (
     <View style={styles.iconButton}>
       <Pressable
+        disabled={disabled === "DISABLED" || disabled === "DEACTIVATED"}
         android_ripple={{
           color:
             color === "light"

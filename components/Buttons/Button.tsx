@@ -40,7 +40,7 @@ const Button = ({
   const colorPallete = getColorPallete({ color } as ColorPalleteOptions);
   const selectedColor =
     variant == "solid"
-      ? disabled === "true" || disabled === true
+      ? disabled === "DISABLED"
         ? AppTheme.pallete.ui.gray.dark
         : "white"
       : colorPallete.dark;
