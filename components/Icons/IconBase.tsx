@@ -51,7 +51,8 @@ export type Icons =
   | "credit-card"
   | "dollar-sign"
   | "plus"
-  | "minus";
+  | "minus"
+  | "package";
 
 //Type Icons Filled
 export type IconsFilled =

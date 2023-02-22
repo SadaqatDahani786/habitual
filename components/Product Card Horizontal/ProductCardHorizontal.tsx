@@ -15,7 +15,7 @@ import AppTheme from "../../theme/appTheme";
 import IconButton from "../Buttons/IconButton";
 
 //Type Delivery Status
-type DeliveryStatus = "NONE" | "PENDING" | "DELIVERED" | "CANCELED";
+export type DeliveryStatus = "NONE" | "PENDING" | "DELIVERED" | "CANCELED";
 
 //ProductCardHorizontal Props
 interface ProductCardHorizontalProps {

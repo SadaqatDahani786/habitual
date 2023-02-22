@@ -9,10 +9,9 @@ import { setStatusbarStatus } from "../store/statusbarReducer";
  ** Hook [useAnimateStatusbarOnScroll]
  ** ============================================================================
  */
-const useAnimateStatusbarOnScroll = (): [
-  boolean,
-  (yOffset: number) => void
-] => {
+const useAnimateStatusbarOnScroll = (
+  offset: number = 300
+): [boolean, (yOffset: number) => void] => {
   //1) Access redux state and action dispatcher
   const statusbarBgColorStatus = useSelector(
     (state: RootState) => state.statusbar
@@ -21,8 +20,8 @@ const useAnimateStatusbarOnScroll = (): [
 
   //2) Check offset and set statusbar status based on it
   const setStatusbarBgColorStatus = (yOffset: number) => {
-    if (yOffset > 300) dispatchAction(setStatusbarStatus(false));
-    else if (yOffset < 300) dispatchAction(setStatusbarStatus(true));
+    if (yOffset > offset) dispatchAction(setStatusbarStatus(false));
+    else if (yOffset < offset) dispatchAction(setStatusbarStatus(true));
   };
 
   //3) Return
