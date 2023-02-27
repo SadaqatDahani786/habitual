@@ -33,6 +33,8 @@ import InterSemiBold from "./assets/fonts/Inter-SemiBold.ttf";
 //Redux
 import { Provider } from "react-redux";
 import store from "./store/store";
+import OrdersScreen from "./screens/Orders Screen";
+import OrdersFilterScreen from "./screens/OrdersFilterScreen";
 
 //Navigators
 const Stack = createNativeStackNavigator();
@@ -63,6 +65,14 @@ const BottomTabNavigation = () => {
         component={WishlistScreen}
         options={{
           tabBarIcon: () => <IconOutlined name="heart" color="dark" />,
+          tabBarShowLabel: false,
+        }}
+      />
+      <BottomTab.Screen
+        name="OrdersScreen"
+        component={OrdersScreen}
+        options={{
+          tabBarIcon: () => <IconOutlined name="package" color="dark" />,
           tabBarShowLabel: false,
         }}
       />
@@ -141,6 +151,10 @@ const App = () => {
             }}
           />
           <Stack.Screen name="HomeScreens" component={BottomTabNavigation} />
+          <Stack.Screen
+            name="OrdersFilterScreen"
+            component={OrdersFilterScreen}
+          />
         </Stack.Navigator>
         <StatusBar style="auto" />
       </NavigationContainer>
