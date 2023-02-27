@@ -284,7 +284,7 @@ const RangeSlider = ({
       useNativeDriver: false,
       duration: 0,
     }).start();
-    prevSliderHandle2XPos.current = width;
+    prevSliderHandle2XPos.current = width - handleSize;
   }, [width]);
 
   return (
