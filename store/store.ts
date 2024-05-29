@@ -2,11 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 
 //Reducers
 import statusbarReducer from "./statusbarReducer";
+import firebaseReducer from "./firebaseReducer";
 
 //Store
 const store = configureStore({
   reducer: {
     statusbar: statusbarReducer,
+    firebase: firebaseReducer,
   },
 });
 
