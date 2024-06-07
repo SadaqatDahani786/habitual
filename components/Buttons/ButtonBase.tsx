@@ -1,4 +1,4 @@
-import { StyleSheet, Pressable, View } from "react-native";
+import { StyleSheet, Pressable, View, ActivityIndicator } from "react-native";
 
 //Theme
 import { getColorPallete, getSpacing } from "../../theme/appTheme";
@@ -21,6 +21,7 @@ export interface ButtonBaseProps extends ColorPalleteOptions {
   size?: sizes;
   roundedCorners?: cornerRadius;
   disabled?: disabled;
+  loading?: booleanAlt;
   showRipple?: booleanAlt;
   fullWidth?: booleanAlt;
   onPress?(): void;
@@ -37,6 +38,7 @@ const ButtonBase = ({
   size = "md",
   roundedCorners = "md",
   disabled = "DEFAULT",
+  loading = "false",
   fullWidth = false,
   showRipple = true,
   onPress,
@@ -48,6 +50,7 @@ const ButtonBase = ({
    ** **
    */
   const colorPallete = getColorPallete({ color } as ColorPalleteOptions);
+  const selectedColor = variant == "solid" ? "white" : colorPallete.dark;
   const padding = getSpacing({
     size,
     space: { horizontal: 2, vertical: 1 },
@@ -120,14 +123,23 @@ const ButtonBase = ({
   return (
     <View style={styles.container}>
       <Pressable
-        disabled={disabled === "DEACTIVATED" || disabled === "DISABLED"}
+        disabled={
+          disabled === "DEACTIVATED" ||
+          disabled === "DISABLED" ||
+          loading === "true" ||
+          loading === true
+        }
         android_ripple={{
           color: variant === "soft" ? colorPallete.dark : colorPallete.light,
         }}
         onPress={onPress}
         style={styles.pressable}
       >
-        {children}
+        {loading === true || loading === "true" ? (
+          <ActivityIndicator size="small" color={selectedColor} />
+        ) : (
+          children
+        )}
       </Pressable>
     </View>
   );

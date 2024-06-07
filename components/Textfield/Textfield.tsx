@@ -1,7 +1,15 @@
-import { StyleSheet, TextInput, View } from "react-native";
+import {
+  NativeSyntheticEvent,
+  StyleSheet,
+  TextInput,
+  TextInputFocusEventData,
+  View,
+} from "react-native";
 
 //App Theme
 import AppTheme, { getColorPallete, getSize } from "../../theme/appTheme";
+
+//Utils
 import {
   ColorPalleteOptions,
   variants,
@@ -15,7 +23,11 @@ import { assertUnreachable } from "../../utils/utils";
 //UI Components
 import Typography from "../Typography";
 
-//Textfield Props
+/**
+ ** ============================================================================
+ ** Interface [TextfieldProps]
+ ** ============================================================================
+ */
 interface TextfieldProps extends ColorPalleteOptionsAlt {
   variant?: variants;
   size?: sizes;
@@ -29,6 +41,7 @@ interface TextfieldProps extends ColorPalleteOptionsAlt {
   showPassword?: booleanAlt;
   value?: string;
   onTextChange?: (text: string) => void;
+  onBlur?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
 }
 
 /**
@@ -49,7 +62,8 @@ const Textfield = ({
   iconEnd,
   showPassword = "false",
   value,
-  onTextChange,
+  onTextChange = () => "",
+  onBlur = () => "",
 }: TextfieldProps) => {
   /*
    ** **
@@ -148,6 +162,7 @@ const Textfield = ({
         <TextInput
           value={value}
           onChangeText={onTextChange}
+          onBlur={onBlur}
           style={styles.textField}
           keyboardType={
             inputType === "number"

@@ -27,6 +27,7 @@ const Button = ({
   size,
   roundedCorners,
   disabled,
+  loading,
   fullWidth,
   iconStart,
   iconEnd,
@@ -98,6 +99,7 @@ const Button = ({
       size={size}
       roundedCorners={roundedCorners}
       disabled={disabled}
+      loading={loading}
       onPress={onPress}
       fullWidth={fullWidth}
     >
