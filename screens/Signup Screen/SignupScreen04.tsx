@@ -1,26 +1,31 @@
 import { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-//App Theme
+//App Theme & Types
 import AppTheme from "../../theme/appTheme";
+import { RootStackParamList } from "../../App";
 
 //UI Components
 import Button from "../../components/Buttons/Button";
 import Typography from "../../components/Typography";
 
-//SignupScreen04 Props
-interface SignupScreen04Props {
-  navigation: NativeStackNavigationProp<any, any>;
-}
+/**
+ ** ============================================================================
+ ** Interface [SignupScreen04Props]
+ ** ============================================================================
+ */
+
+interface SignupScreen04Props
+  extends NativeStackScreenProps<RootStackParamList, "SignupScreen04"> {}
 
 /**
  ** ============================================================================
  ** Component [SignupScreen04]
  ** ============================================================================
  */
-const SignupScreen04 = ({ navigation }: SignupScreen04Props) => {
+const SignupScreen04 = ({ route, navigation }: SignupScreen04Props) => {
   /*
    ** **
    ** ** ** State & Vars
@@ -66,6 +71,7 @@ const SignupScreen04 = ({ navigation }: SignupScreen04Props) => {
    ** ** ** Methods
    ** **
    */
+  //Update checkboxes status
   const updateCheckboxButtonState = (ind: number) => {
     const updatedState = buttonCheckboxes.map((btnChkbox, i) => {
       const updBtnChkbox = btnChkbox;
@@ -142,13 +148,30 @@ const SignupScreen04 = ({ navigation }: SignupScreen04Props) => {
           title="Continue"
           variant="solid"
           color="primary"
-          onPress={() => navigation.navigate("SignupScreen05")}
+          onPress={() => {
+            //1) If not any reason selected, return with alert message
+            if (buttonCheckboxes.every((curr) => !curr.state))
+              return Alert.alert(
+                "No Reason Selected!",
+                "Please pick atleast one reason for joining our app."
+              );
+
+            //2) Naviagate to next screen with props
+            navigation.navigate("SignupScreen05", {
+              ...route.params,
+              joiningReasons: buttonCheckboxes
+                .filter((curr) => curr.state)
+                .map((curr) => curr.title),
+            });
+          }}
         />
         <Button
           title="Back"
           variant="outlined"
           color="primary"
-          onPress={() => navigation.navigate("SignupScreen03")}
+          onPress={() =>
+            navigation.navigate("SignupScreen03", { ...route.params })
+          }
         />
       </View>
     </View>

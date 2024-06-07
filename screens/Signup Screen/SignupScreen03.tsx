@@ -2,10 +2,11 @@ import { useState } from "react";
 import { View, StyleSheet, Image } from "react-native";
 
 import * as ImagePicker from "expo-image-picker";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-//App Theme
+//App Theme & Types
 import AppTheme from "../../theme/appTheme";
+import { RootStackParamList } from "../../App";
 
 //UI Components
 import Button from "../../components/Buttons/Button";
@@ -14,17 +15,20 @@ import IconButton from "../../components/Buttons/IconButton";
 import IconOutlined from "../../components/Icons/IconOutlined";
 import Link from "../../components/Link";
 
-//SignupScreen03 Props
-interface SignupScreen03Props {
-  navigation: NativeStackNavigationProp<any, any>;
-}
+/**
+ ** ============================================================================
+ ** Interface [SignupScreen03Props]
+ ** ============================================================================
+ */
+interface SignupScreen03Props
+  extends NativeStackScreenProps<RootStackParamList, "SignupScreen03"> {}
 
 /**
  ** ============================================================================
  ** Component [SignupScreen03]
  ** ============================================================================
  */
-const SignupScreen03 = ({ navigation }: SignupScreen03Props) => {
+const SignupScreen03 = ({ route, navigation }: SignupScreen03Props) => {
   /*
    ** **
    ** ** ** State & Vars
@@ -38,10 +42,12 @@ const SignupScreen03 = ({ navigation }: SignupScreen03Props) => {
    ** **
    */
   const imagePicker = async () => {
+    //1) Pick an image
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
     });
 
+    //2) If not canceled, set the picked image
     if (!result.canceled) {
       setProfileImage(result.assets[0].uri);
     }
@@ -135,7 +141,7 @@ const SignupScreen03 = ({ navigation }: SignupScreen03Props) => {
           <Typography variant="bodySm">Select photo</Typography>
         </View>
         <View style={styles.linkSkip}>
-          <Link text="Skip this step for now" />
+          <Link text="You can skip this step for now" />
         </View>
       </View>
       <View style={styles.textOrWrapper}>
@@ -152,13 +158,20 @@ const SignupScreen03 = ({ navigation }: SignupScreen03Props) => {
           title="Continue"
           variant="solid"
           color="primary"
-          onPress={() => navigation.navigate("SignupScreen04")}
+          onPress={() => {
+            navigation.navigate("SignupScreen04", {
+              ...route.params,
+              photo: profileImage,
+            });
+          }}
         />
         <Button
           title="Back"
           variant="outlined"
           color="primary"
-          onPress={() => navigation.navigate("SignupScreen02")}
+          onPress={() =>
+            navigation.navigate("SignupScreen02", { ...route.params })
+          }
         />
       </View>
     </View>

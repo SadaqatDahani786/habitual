@@ -1,5 +1,8 @@
 import { StyleSheet, View } from "react-native";
+
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { Formik } from "formik";
+import * as Yup from "yup";
 
 //App Theme
 import AppTheme from "../../theme/appTheme";
@@ -11,7 +14,11 @@ import Textfield from "../../components/Textfield";
 import Typography from "../../components/Typography";
 import Link from "../../components/Link";
 
-//SignupScreen Props
+/**
+ ** ============================================================================
+ ** Interface [SignupScreenProps]
+ ** ============================================================================
+ */
 interface SignupScreenProps {
   navigation: NativeStackNavigationProp<any, any>;
 }
@@ -22,9 +29,6 @@ interface SignupScreenProps {
  ** ============================================================================
  */
 const SignupScreen = ({ navigation }: SignupScreenProps) => {
-  const pressLoginHandler = () => {
-    navigation.navigate("LoginScreen");
-  };
   /*
    ** **
    ** ** ** Styles
@@ -81,31 +85,67 @@ const SignupScreen = ({ navigation }: SignupScreenProps) => {
     },
   });
 
+  /*
+   ** **
+   ** ** ** Methods
+   ** **
+   */
+  const pressLoginHandler = () => {
+    navigation.navigate("LoginScreen");
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.steps}>
-        <Typography variant="h5">STEP 1 OF 5</Typography>
-      </View>
       <View style={styles.signupForm}>
         <View style={styles.mainHeading}>
           <Typography variant="h1">Welcome!</Typography>
         </View>
         <Typography variant="h2">What should we call you?</Typography>
-        <View style={styles.spacer}>
-          <Textfield
-            size="sm"
-            variant="outlined"
-            color="dark"
-            placeholder="your name"
-          />
-        </View>
-        <Button
-          color="primary"
-          variant="solid"
-          title="Get started"
-          fullWidth="true"
-          onPress={() => navigation.navigate("SignupScreen02")}
-        />
+        <Formik
+          initialValues={{
+            displayName: "",
+          }}
+          onSubmit={({ displayName }) => {
+            navigation.navigate("SignupScreen02", { displayName: displayName });
+          }}
+          validationSchema={Yup.object({
+            displayName: Yup.string()
+              .max(15, "Name must not be longer than 15 characters.")
+              .required("Please tell us who you are?"),
+          })}
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+          }) => (
+            <>
+              <View style={styles.spacer}>
+                <Textfield
+                  size="sm"
+                  variant="outlined"
+                  color="dark"
+                  placeholder="Your name"
+                  value={values.displayName}
+                  onTextChange={handleChange("displayName")}
+                  onBlur={handleBlur("displayName")}
+                  helperText={errors.displayName}
+                  error={errors.displayName !== "" && touched.displayName}
+                />
+              </View>
+              <Button
+                color="primary"
+                variant="solid"
+                title="Get started"
+                fullWidth="true"
+                onPress={handleSubmit}
+              />
+            </>
+          )}
+        </Formik>
       </View>
       <View style={styles.wrapper}>
         <View style={styles.hr} />

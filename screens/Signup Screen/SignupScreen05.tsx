@@ -1,18 +1,31 @@
 import { useState } from "react";
-import { Image, StyleSheet, View, FlatList } from "react-native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { Image, StyleSheet, View, FlatList, Alert } from "react-native";
 
-//App Theme
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+
+//Firebase
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { ref, set } from "firebase/database";
+import { FirebaseError } from "firebase/app";
+import useFirebase from "../../hooks/useFirebase";
+
+//App Theme & Types
 import AppTheme from "../../theme/appTheme";
+import { RootStackParamList } from "../../App";
 
 //UI Components
 import Button from "../../components/Buttons/Button";
 import Card from "../../components/Card/Card";
 import Typography from "../../components/Typography";
 
-//SignupScreen05 Props
-interface SignupScreen05Props {
-  navigation: NativeStackNavigationProp<any, any>;
+/**
+ ** ============================================================================
+ ** Interface [SignupScreen05Props]
+ ** ============================================================================
+ */
+interface SignupScreen05Props
+  extends NativeStackScreenProps<RootStackParamList, "SignupScreen05"> {}
+{
 }
 
 /**
@@ -20,10 +33,10 @@ interface SignupScreen05Props {
  ** Component [SignupScreen05]
  ** ============================================================================
  */
-const SignupScreen05 = ({ navigation }: SignupScreen05Props) => {
+const SignupScreen05 = ({ route, navigation }: SignupScreen05Props) => {
   /**
    ** **
-   ** ** ** State & Vars
+   ** ** ** State & Hooks
    ** **
    */
   const [interests, setInterests] = useState([
@@ -62,20 +75,8 @@ const SignupScreen05 = ({ navigation }: SignupScreen05Props) => {
       checked: false,
     },
   ]);
-
-  /**
-   ** **
-   ** ** ** Methods
-   ** **
-   */
-  const checkboxHandler = (id: number) => {
-    setInterests((state) =>
-      state.map((cb) => {
-        if (cb.id === id) cb.checked = !cb.checked;
-        return cb;
-      })
-    );
-  };
+  const { auth, db } = useFirebase();
+  const [loadingState, setLoadingState] = useState(false);
 
   /*
    ** **
@@ -114,6 +115,99 @@ const SignupScreen05 = ({ navigation }: SignupScreen05Props) => {
       height: 200,
     },
   });
+
+  /*
+   ** **
+   ** ** ** Methods
+   ** **
+   */
+  //Handle checkboxes state
+  const checkboxHandler = (id: number) => {
+    setInterests((state) =>
+      state.map((cb) => {
+        if (cb.id === id) cb.checked = !cb.checked;
+        return cb;
+      })
+    );
+  };
+
+  //Handle user signup
+  const handleUserSignup = async (
+    userProfile: {
+      email: string;
+      password: string;
+      photo: string;
+      displayName: string;
+      joiningReasons: string[];
+      interests: string[];
+    } = {
+      email: "",
+      password: "",
+      displayName: "",
+      joiningReasons: [],
+      photo: "",
+      interests: [],
+    }
+  ) => {
+    try {
+      //1) Set loading state to true
+      setLoadingState(true);
+
+      //2) Signup user with email and password
+      const user = await createUserWithEmailAndPassword(
+        auth,
+        userProfile.email,
+        userProfile.password
+      );
+
+      //3) Update displayName and profile photo
+      await updateProfile(user.user, {
+        displayName: userProfile.displayName,
+        photoURL: userProfile.photo,
+      });
+
+      //4) Create user reasons to join the app object
+      const reasons: Record<number, { reason: string }> = {};
+      userProfile.joiningReasons.map((reason, ind) => {
+        reasons[ind] = { reason: reason };
+      });
+
+      //5) Create user picked interests object
+      const interests: Record<number, { category: string }> = {};
+      userProfile.interests.map((cat, ind) => {
+        interests[ind] = { category: cat };
+      });
+
+      //6) Set reasons and interests on users collection
+      await set(ref(db, "users/" + user.user.uid + "/"), {
+        joiningReasons: reasons,
+        interests: interests,
+      });
+
+      //7) Navigate to home screen
+      navigation.navigate("HomeScreens");
+    } catch (error: unknown) {
+      //==> Set loading state to false
+      setLoadingState(false);
+
+      //=> Duplicate email
+      if (
+        error instanceof FirebaseError &&
+        error.code === "auth/email-already-in-use"
+      ) {
+        return Alert.alert(
+          "Error Occured!",
+          `Please use a different email address, email "${userProfile.email}" already exist.`
+        );
+      }
+
+      //=> Unknown error
+      Alert.alert(
+        "Error Occured!",
+        "Something went wrong with creating account, please try again."
+      );
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -154,16 +248,35 @@ const SignupScreen05 = ({ navigation }: SignupScreen05Props) => {
       </View>
       <View style={styles.buttonGroup}>
         <Button
-          title="Get started"
+          title="Let's get started"
           variant="solid"
           color="primary"
-          onPress={() => navigation.navigate("HomeScreens")}
+          loading={loadingState}
+          onPress={() => {
+            //1) Don't go furher, unless interests are picked
+            if (interests.filter((interest) => interest.checked).length < 3) {
+              return Alert.alert(
+                "No Interests Picked!",
+                `Please pick few interest, so we can give better recommendations to your likings.`
+              );
+            }
+
+            //2) Handle user signup
+            handleUserSignup({
+              ...route.params,
+              interests: interests
+                .filter((interest) => interest.checked)
+                .map((interest) => interest.title),
+            });
+          }}
         />
         <Button
           title="Back"
           variant="outlined"
           color="primary"
-          onPress={() => navigation.navigate("SignupScreen04")}
+          onPress={() =>
+            navigation.navigate("SignupScreen04", { ...route.params })
+          }
         />
       </View>
     </View>

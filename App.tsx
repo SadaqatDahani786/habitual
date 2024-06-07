@@ -22,6 +22,8 @@ import {
 } from "./screens/Signup Screen";
 import Home from "./screens/Home";
 import WishlistScreen from "./screens/Wishlist/WishlistScreen";
+import OrdersScreen from "./screens/Orders Screen";
+import OrdersFilterScreen from "./screens/OrdersFilterScreen";
 
 //UI Components
 import IconOutlined from "./components/Icons/IconOutlined";
@@ -33,11 +35,38 @@ import InterSemiBold from "./assets/fonts/Inter-SemiBold.ttf";
 //Redux
 import { Provider } from "react-redux";
 import store from "./store/store";
-import OrdersScreen from "./screens/Orders Screen";
-import OrdersFilterScreen from "./screens/OrdersFilterScreen";
+
+/**
+ ** ============================================================================
+ ** Type [RootStackParamList]
+ ** ============================================================================
+ */
+export type RootStackParamList = {
+  WelcomeScreen: undefined;
+  OnboardingScreen: undefined;
+  LoginScreen: undefined;
+  SignupScreen: undefined;
+  SignupScreen02: { displayName: string };
+  SignupScreen03: { email: string; password: string; displayName: string };
+  SignupScreen04: {
+    email: string;
+    password: string;
+    displayName: string;
+    photo: string;
+  };
+  SignupScreen05: {
+    email: string;
+    password: string;
+    displayName: string;
+    photo: string;
+    joiningReasons: string[];
+  };
+  HomeScreens: undefined;
+  OrdersFilterScreen: undefined;
+};
 
 //Navigators
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 const BottomTab = createBottomTabNavigator();
 
 /**
