@@ -61,13 +61,25 @@ export type RootStackParamList = {
     photo: string;
     joiningReasons: string[];
   };
-  HomeScreens: undefined;
+  HomeScreens: { photo?: string };
   OrdersFilterScreen: undefined;
+};
+
+/**
+ ** ============================================================================
+ ** Type [BottomTabParamList]
+ ** ============================================================================
+ */
+export type BottomTabParamList = {
+  WelcomeScreen: undefined;
+  HomeScreen: { photo?: string };
+  WishlistScreen: undefined;
+  OrdersScreen: undefined;
 };
 
 //Navigators
 const Stack = createNativeStackNavigator<RootStackParamList>();
-const BottomTab = createBottomTabNavigator();
+const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 /**
  ** ============================================================================

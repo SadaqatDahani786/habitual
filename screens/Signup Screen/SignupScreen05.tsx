@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Image, StyleSheet, View, FlatList, Alert } from "react-native";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { CommonActions } from "@react-navigation/native";
 
 //Firebase
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
@@ -184,8 +185,15 @@ const SignupScreen05 = ({ route, navigation }: SignupScreen05Props) => {
         interests: interests,
       });
 
-      //7) Navigate to home screen
-      navigation.navigate("HomeScreens");
+      //7) Navigate to home screen and reset navigation stack
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [
+            { name: "HomeScreens", params: { photo: userProfile?.photo } },
+          ],
+        })
+      );
     } catch (error: unknown) {
       //==> Set loading state to false
       setLoadingState(false);

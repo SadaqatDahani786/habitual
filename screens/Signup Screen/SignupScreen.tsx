@@ -31,6 +31,15 @@ interface SignupScreenProps {
 const SignupScreen = ({ navigation }: SignupScreenProps) => {
   /*
    ** **
+   ** ** ** Methods
+   ** **
+   */
+  const pressLoginHandler = () => {
+    navigation.navigate("LoginScreen");
+  };
+
+  /*
+   ** **
    ** ** ** Styles
    ** **
    */
@@ -84,15 +93,6 @@ const SignupScreen = ({ navigation }: SignupScreenProps) => {
       paddingTop: AppTheme.spacer(2) as number,
     },
   });
-
-  /*
-   ** **
-   ** ** ** Methods
-   ** **
-   */
-  const pressLoginHandler = () => {
-    navigation.navigate("LoginScreen");
-  };
 
   return (
     <View style={styles.container}>

@@ -1,4 +1,6 @@
 import { StyleSheet, View } from "react-native";
+
+import { CommonActions } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 //App Theme
@@ -42,7 +44,14 @@ const WelcomeScreen = ({ navigation }: WelcomeScreenProps) => {
   //Navigate to Home Screen if user logged in
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(
-      (user) => user && navigation.replace("HomeScreens")
+      (user) =>
+        user &&
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 1,
+            routes: [{ name: "HomeScreens" }],
+          })
+        )
     );
 
     return unsubscribe;

@@ -11,12 +11,14 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { StatusBar } from "expo-status-bar";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import { CommonActions } from "@react-navigation/native";
 import { User, signOut } from "firebase/auth";
 
-//App Theme
+//App Theme & Types
 import AppTheme from "../../theme/appTheme";
 import { colors } from "../../theme/appThemeModel";
+import { BottomTabParamList } from "../../App";
 
 //UI Components
 import Header from "../../Layouts/Header";
@@ -38,16 +40,15 @@ import useFirebase from "../../hooks/useFirebase";
  ** Interface [HomeProps]
  ** ============================================================================
  */
-interface HomeProps {
-  navigation: NativeStackNavigationProp<any, any>;
-}
+interface HomeProps
+  extends BottomTabScreenProps<BottomTabParamList, "HomeScreen"> {}
 
 /**
  ** ============================================================================
  ** Component [Home]
  ** ============================================================================
  */
-const Home = ({ navigation }: HomeProps) => {
+const Home = ({ route, navigation }: HomeProps) => {
   /**
    ** **
    ** ** ** Dummy Data
@@ -398,32 +399,40 @@ const Home = ({ navigation }: HomeProps) => {
    ** ** ** Side Effects
    ** **
    */
-  //Set user, if logged in, else navigate to WelcomeScreen
+  //=> Set user, if logged in, else navigate to WelcomeScreen
   useEffect(() => {
     //1) Subscribe
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) setUser(user);
-      else navigation.replace("WelcomeScreen");
+      else
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 1,
+            routes: [{ name: "WelcomeScreen" }],
+          })
+        );
     });
 
     //2) Clean up
     return unsubscribe;
   }, []);
 
+  //=> Set statusbar bg color when "this" tab gets focused
+  useEffect(() => {
+    //1) Subscribe
+    const unsubscribe = navigation.addListener("focus", (e) => {
+      setStatusbarBgColorStatus(Number.parseInt(JSON.stringify(scrollY)));
+    });
+
+    //2) Clean up
+    return unsubscribe;
+  }, [navigation]);
+
   /**
    ** **
    ** ** ** Methods
    ** **
    */
-  //Set statusbar bg color when "this" tab gets focused
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", (e) => {
-      setStatusbarBgColorStatus(Number.parseInt(JSON.stringify(scrollY)));
-    });
-
-    return unsubscribe;
-  }, [navigation]);
-
   //OnPress interest item, scroll to it's position
   const scrollToItem = (ind: number): void => {
     const pos = customSnapToOffset[ind] - layout.width / 2 + 45;
@@ -475,7 +484,7 @@ const Home = ({ navigation }: HomeProps) => {
         <Header
           title="Find the stuff you love!"
           subtitle={"Take a look what we've found for you."}
-          avatar={user?.photoURL as string}
+          avatar={route.params?.photo || (user?.photoURL as string)}
           isLoggedIn={user ? true : false}
           onPressAvatar={() => signOut(auth)}
         />
