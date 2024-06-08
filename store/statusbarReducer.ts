@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 //Default State
-const defaultState = true;
+const defaultState = { value: true };
 
 //statusbar slice
 const statusbarSlice = createSlice({
@@ -9,7 +9,7 @@ const statusbarSlice = createSlice({
   initialState: defaultState,
   reducers: {
     setStatusbarStatus: (state, payload) => {
-      return payload.payload;
+      return { value: payload.payload.value };
     },
   },
 });

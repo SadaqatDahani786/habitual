@@ -1,6 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-
-//Redux
 import { RootState } from "../store/store";
 import { setStatusbarStatus } from "../store/statusbarReducer";
 
@@ -14,14 +12,16 @@ const useAnimateStatusbarOnScroll = (
 ): [boolean, (yOffset: number) => void] => {
   //1) Access redux state and action dispatcher
   const statusbarBgColorStatus = useSelector(
-    (state: RootState) => state.statusbar
+    (state: RootState) => state.statusbar.value
   );
   const dispatchAction = useDispatch();
 
   //2) Check offset and set statusbar status based on it
   const setStatusbarBgColorStatus = (yOffset: number) => {
-    if (yOffset > offset) dispatchAction(setStatusbarStatus(false));
-    else if (yOffset < offset) dispatchAction(setStatusbarStatus(true));
+    if (yOffset > offset && statusbarBgColorStatus)
+      dispatchAction(setStatusbarStatus({ value: false }));
+    else if (yOffset < offset && !statusbarBgColorStatus)
+      dispatchAction(setStatusbarStatus({ value: true }));
   };
 
   //3) Return
