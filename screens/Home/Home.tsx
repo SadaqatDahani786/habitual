@@ -12,6 +12,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { StatusBar } from "expo-status-bar";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { User, signOut } from "firebase/auth";
 
 //App Theme
 import AppTheme from "../../theme/appTheme";
@@ -30,8 +31,13 @@ import ProductCardHorizontal from "../../components/Product Card Horizontal/Prod
 
 //Custom Hooks
 import useAnimateStatusbarOnScroll from "../../hooks/useAnimateStatusbarOnScroll";
+import useFirebase from "../../hooks/useFirebase";
 
-//Home Props
+/**
+ ** ============================================================================
+ ** Interface [HomeProps]
+ ** ============================================================================
+ */
 interface HomeProps {
   navigation: NativeStackNavigationProp<any, any>;
 }
@@ -258,9 +264,6 @@ const Home = ({ navigation }: HomeProps) => {
     ],
   ];
 
-  //User login status
-  const isUserLoggedIn = true;
-
   /**
    ** **
    ** ** ** State & Vars
@@ -272,6 +275,7 @@ const Home = ({ navigation }: HomeProps) => {
     width: 0,
     height: 0,
   });
+  const [user, setUser] = useState<User | undefined>();
 
   //Refs
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -282,6 +286,7 @@ const Home = ({ navigation }: HomeProps) => {
   //Custom Hooks
   const [statusbarBgColorStatus, setStatusbarBgColorStatus] =
     useAnimateStatusbarOnScroll();
+  const { auth } = useFirebase();
 
   //Custom snap to offsets
   const customSnapToOffset = interests.map((_, i) => {
@@ -333,7 +338,7 @@ const Home = ({ navigation }: HomeProps) => {
     },
     interests: {
       padding: AppTheme.spacer(3) as number,
-      paddingRight: isUserLoggedIn ? (AppTheme.spacer(3) as number) : 0,
+      paddingRight: AppTheme.spacer(3) as number,
     },
     headerTitle: {
       display: "flex",
@@ -341,7 +346,7 @@ const Home = ({ navigation }: HomeProps) => {
       justifyContent: "space-between",
       paddingTop: AppTheme.spacer(1) as number,
       paddingBottom: AppTheme.spacer(2) as number,
-      paddingRight: isUserLoggedIn ? 0 : (AppTheme.spacer(3) as number),
+      paddingRight: AppTheme.spacer(3) as number,
     },
     interestsList: {
       elevation: 1,
@@ -387,6 +392,23 @@ const Home = ({ navigation }: HomeProps) => {
       alignItems: "flex-end",
     },
   });
+
+  /**
+   ** **
+   ** ** ** Side Effects
+   ** **
+   */
+  //Set user, if logged in, else navigate to WelcomeScreen
+  useEffect(() => {
+    //1) Subscribe
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) setUser(user);
+      else navigation.replace("WelcomeScreen");
+    });
+
+    //2) Clean up
+    return unsubscribe;
+  }, []);
 
   /**
    ** **
@@ -452,13 +474,10 @@ const Home = ({ navigation }: HomeProps) => {
       >
         <Header
           title="Find the stuff you love!"
-          subtitle={
-            isUserLoggedIn
-              ? "Take a look what we've found for you."
-              : "TRENDING ITEMS"
-          }
-          avatar="https://pbs.twimg.com/media/FkgquzMXgAIcsih?format=jpg&name=large"
-          isLoggedIn={isUserLoggedIn}
+          subtitle={"Take a look what we've found for you."}
+          avatar={user?.photoURL as string}
+          isLoggedIn={user ? true : false}
+          onPressAvatar={() => signOut(auth)}
         />
         <View style={styles.productList}>
           <FlatList
@@ -474,12 +493,10 @@ const Home = ({ navigation }: HomeProps) => {
         </View>
         <View style={styles.interests}>
           <View style={styles.headerTitle}>
-            <Typography variant="bodySmAlt">
-              {isUserLoggedIn ? "YOUR INTERESTS" : "HOT DEALS"}
-            </Typography>
+            <Typography variant="bodySmAlt">{"YOUR INTERESTS"}</Typography>
             <Link size="sm" text="SEE MORE" />
           </View>
-          {isUserLoggedIn ? (
+          {
             <View style={styles.interestsList}>
               <FlatList
                 style={{ flexGrow: 0, paddingVertical: 8 }}
@@ -537,19 +554,7 @@ const Home = ({ navigation }: HomeProps) => {
                 ))}
               </ScrollView>
             </View>
-          ) : (
-            <View style={styles.dealsList}>
-              <FlatList
-                contentContainerStyle={styles.listContainerStyle}
-                ItemSeparatorComponent={() => <View style={{ width: 16 }} />}
-                horizontal={true}
-                data={products}
-                renderItem={(item) => (
-                  <ProductCard variant="mini" {...item.item} />
-                )}
-              />
-            </View>
-          )}
+          }
         </View>
         <View style={styles.cardGrid}>
           <View style={styles.cardGridRow}>

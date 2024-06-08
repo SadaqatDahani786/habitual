@@ -12,6 +12,10 @@ import Link from "../../components/Link";
 import Logo from "../../components/Logo";
 import Typography from "../../components/Typography";
 
+//Firebase
+import useFirebase from "../../hooks/useFirebase";
+import { useEffect } from "react";
+
 //WelcomeScreen Props
 interface WelcomeScreenProps {
   navigation: NativeStackNavigationProp<any, any>;
@@ -23,6 +27,27 @@ interface WelcomeScreenProps {
  ** ============================================================================
  */
 const WelcomeScreen = ({ navigation }: WelcomeScreenProps) => {
+  /**
+   ** **
+   ** ** ** State & Hooks
+   ** **
+   */
+  const { auth } = useFirebase();
+
+  /**
+   ** **
+   ** ** ** Events & Callbacks
+   ** **
+   */
+  //Navigate to Home Screen if user logged in
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(
+      (user) => user && navigation.replace("HomeScreens")
+    );
+
+    return unsubscribe;
+  }, []);
+
   /**
    ** **
    ** ** ** Methods
