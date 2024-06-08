@@ -8,10 +8,12 @@ import { RootState } from "../store/store";
  */
 const useFirebase = () => {
   //1) Access state
-  const { app, auth, db } = useSelector((state: RootState) => state.firebase);
+  const { app, auth, storage, db } = useSelector(
+    (state: RootState) => state.firebase
+  );
 
   //2) Return
-  return { app, auth, db };
+  return { app, auth, storage, db };
 };
 
 export default useFirebase;
