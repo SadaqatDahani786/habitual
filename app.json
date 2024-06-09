@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "habitual",
+    "scheme": "habitual",
     "slug": "habitual",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -14,18 +15,18 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.sadaqat.habitual"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.sadaqatdahani.habitual"
+      "package": "com.sadaqat.habitual",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -34,6 +35,7 @@
       "eas": {
         "projectId": "f46e6981-eb52-43e4-83ef-bdd69b58b9e7"
       }
-    }
+    },
+    "plugins": ["expo-font", "@react-native-google-signin/google-signin"]
   }
 }
